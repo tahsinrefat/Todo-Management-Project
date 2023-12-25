@@ -1,7 +1,6 @@
 package com.todo.tmsbackend.controller;
 
 import com.todo.tmsbackend.dto.TodoDto;
-import com.todo.tmsbackend.entity.Todo;
 import com.todo.tmsbackend.service.TodoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -46,6 +45,27 @@ public class TodoController {
     public ResponseEntity<TodoDto> updateTodo(@RequestBody TodoDto todoDto,@PathVariable("id") Long todoId){
         TodoDto updatedTodo = todoService.updateTodo(todoDto,todoId);
         return ResponseEntity.ok(updatedTodo);
+    }
+
+    //delete todo REST api
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteTodo(@PathVariable("id") Long todoId){
+        todoService.deleteTodo(todoId);
+        return ResponseEntity.ok("Todo Deleted Successfully");
+    }
+
+    //complete todo REST api
+    @PatchMapping("{id}/complete")   //update existing todo partially
+    public ResponseEntity<TodoDto> completeTodo(@PathVariable("id") Long todoId){
+        TodoDto completedTodo = todoService.completeTodo(todoId);
+        return ResponseEntity.ok(completedTodo);
+    }
+
+    //incomplete todo REST api
+    @PatchMapping("{id}/in-complete")
+    public ResponseEntity<TodoDto> inCompleteTodo(@PathVariable("id") Long todoId){
+        TodoDto inCompletedTodo = todoService.inCompleteTodo(todoId);
+        return ResponseEntity.ok(inCompletedTodo);
     }
 
 }
