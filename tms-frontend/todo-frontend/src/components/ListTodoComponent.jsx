@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getAllTodos } from '../services/TodoService'
+import { completeTodo, deleteTodo, getAllTodos, inCompleteTodo } from '../services/TodoService'
 import { useNavigate } from 'react-router-dom'
 
 const ListTodoComponent = () => {
@@ -37,6 +37,35 @@ const ListTodoComponent = () => {
         })
     }
 
+    const updateTodo = (id) => {
+        console.log(id);
+        navigator(`/update-todo/${id}`)
+    }
+
+    const deleteTodoById = (id) => {
+        deleteTodo(id).then((response) => {
+            listTodos();
+        }).catch(error => {
+            console.error(error);
+        })
+    }
+
+    const markCompleteTodoById = (id) =>{
+        completeTodo(id).then((response) => {
+            listTodos();
+        }).catch(error => {
+            console.error(error);
+        })
+    }
+
+    const markInCompleteTodoById = (id) => {
+        inCompleteTodo(id).then((response) => {
+            listTodos();
+        }).catch(error => {
+            console.error(error);
+        })
+    }
+
     const [todos, setTodos] = useState([]);
 
     const navigator = useNavigate();
@@ -56,6 +85,7 @@ const ListTodoComponent = () => {
                         <th>Todo Title</th>
                         <th>Todo Description</th>
                         <th>Todo Completed</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,6 +95,12 @@ const ListTodoComponent = () => {
                                 <td>{todo.title}</td>
                                 <td>{todo.description}</td>
                                 <td>{todo.completed ? 'Yes': 'No'}</td>
+                                <td>
+                                    <button className="btn btn-info" onClick={() => updateTodo(todo.id)}>Update</button>
+                                    <button className="btn btn-danger" onClick={() => deleteTodoById(todo.id)} style={{ marginLeft: "10px" }}>Delete</button>
+                                    <button className="btn btn-success" onClick={() => markCompleteTodoById(todo.id)} style={{ marginLeft: "10px" }}>Complete</button>
+                                    <button className="btn btn-info" onClick={() => markInCompleteTodoById(todo.id)} style={{ marginLeft: "10px" }}>Incomplete Todo</button>
+                                </td>
                             </tr>
                         )
                     }
