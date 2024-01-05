@@ -23,6 +23,8 @@ function App() {
         <Route path='/add-todo' element = { <TodoComponent />} />
         {/* //http://localhost:3000/update-todo */}
         <Route path='/update-todo/:id' element = { <TodoComponent />} />
+        {/* //http://localhost:3000/register */}
+        <Route path='/register' element = { <TodoComponent />} />
       </Routes>
       <FooterComponent />
     </BrowserRouter>
